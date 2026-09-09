@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>慢慢学英语｜第一课：问候</title>
+    <style>
+      :root { --navy:#16324f; --blue:#216fb5; --sky:#eaf6ff; --yellow:#ffcb4f; --ink:#142435; --muted:#5d6d7d; --line:#cfdfeb; --success:#16866c; }
+      * { box-sizing:border-box; }
+      body { margin:0; color:var(--ink); background:linear-gradient(135deg,#edf8ff 0%,#fdfefe 52%,#fff8e7 100%); font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; font-size:19px; line-height:1.65; }
+      button { font:inherit; cursor:pointer; }
+      .shell { max-width:980px; margin:auto; padding:24px 28px 56px; }
+      header { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:10px 0 28px; }
+      .brand { font-weight:800; color:var(--navy); font-size:25px; letter-spacing:.02em; }
+      .progress { color:var(--navy); font-size:17px; font-weight:700; }
+      .hero { display:grid; grid-template-columns:1.15fr .85fr; align-items:center; gap:32px; background:white; border:1px solid var(--line); border-radius:28px; padding:42px; box-shadow:0 14px 35px rgba(36,87,125,.12); }
+      h1 { margin:0 0 14px; color:var(--navy); font-size:44px; line-height:1.24; }
+      .hero p { margin:0 0 24px; color:var(--muted); }
+      .illustration { min-height:230px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:22px; background:var(--sky); font-size:110px; }
+      .illustration::after { content:"你好！"; position:absolute; top:25px; right:24px; padding:5px 18px; border-radius:22px; background:white; color:var(--blue); font-size:24px; font-weight:800; box-shadow:0 5px 13px rgba(34,91,133,.12); }
+      .primary,.secondary { border-radius:14px; border:2px solid transparent; padding:14px 23px; font-weight:800; min-height:54px; }
+      .primary { color:#112c43; background:var(--yellow); box-shadow:0 3px 0 #dba524; }
+      .primary:hover { background:#ffd66e; transform:translateY(-1px); }
+      .secondary { background:white; color:var(--blue); border-color:#9fc8e9; }
+      main { margin-top:34px; }
+      .lesson-head { display:flex; align-items:end; justify-content:space-between; gap:20px; }
+      h2 { margin:0; color:var(--navy); font-size:30px; }
+      .hint { color:var(--muted); font-size:17px; }
+      .practice { margin-top:16px; display:grid; grid-template-columns:190px 1fr; gap:24px; align-items:stretch; }
+      .steps { display:grid; gap:10px; align-content:start; }
+      .step { padding:14px 16px; border-radius:14px; background:#fff; color:var(--muted); border:1px solid var(--line); font-size:17px; }
+      .step.active { border-color:var(--blue); background:#e7f4ff; color:var(--navy); font-weight:800; }
+      .card { background:white; border:1px solid var(--line); border-radius:24px; padding:38px; box-shadow:0 11px 25px rgba(36,87,125,.09); }
+      .count { color:var(--blue); font-weight:800; }
+      .word { margin:4px 0 0; color:var(--navy); font-family:Georgia,"Times New Roman",serif; font-size:58px; line-height:1.18; }
+      .phonetic { color:var(--blue); margin:2px 0 14px; font-size:23px; }
+      .meaning { font-weight:800; font-size:25px; }
+      .scene { margin:14px 0 25px; color:var(--muted); }
+      .actions { display:flex; flex-wrap:wrap; gap:12px; }
+      #listen { border-color:#a5c9e6; color:var(--blue); background:white; }
+      #record { background:var(--blue); color:white; padding-inline:28px; }
+      #record.recording { background:#c43d43; animation:pulse 1s infinite; }
+      @keyframes pulse { 50% { box-shadow:0 0 0 8px rgba(196,61,67,.16); } }
+      .feedback { display:none; margin-top:25px; padding:17px 20px; border-radius:15px; background:#eaf9f4; color:#155e4d; }
+      .feedback.show { display:block; }
+      .feedback strong { display:block; font-size:21px; }
+      .navrow { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:26px; }
+      .plain { border:0; background:transparent; color:var(--blue); font-weight:800; padding:10px; }
+      .course-list { margin-top:38px; padding-top:30px; border-top:1px solid var(--line); }
+      .course-list h2 { margin-bottom:16px; }
+      .items { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+      .item { background:rgba(255,255,255,.83); border:1px solid var(--line); border-radius:16px; padding:18px; }
+      .item b { color:var(--navy); display:block; font-family:Georgia,serif; font-size:25px; }
+      .item span { color:var(--muted); font-size:16px; }
+      footer { text-align:center; color:var(--muted); font-size:15px; margin-top:42px; }
+      @media (max-width:720px) { body{font-size:18px}.shell{padding:18px 16px 38px}.hero{grid-template-columns:1fr;padding:28px}.illustration{min-height:155px;font-size:82px}h1{font-size:35px}.practice{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}.step{font-size:14px;padding:10px}.card{padding:28px 22px}.word{font-size:47px}.items{grid-template-columns:1fr 1fr}.lesson-head{align-items:start;flex-direction:column;gap:2px} }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header><div class="brand">慢慢学英语</div><div class="progress" id="progress">第一课 · 1 / 10</div></header>
+      <section class="hero">
+        <div><h1>用英语，开心地打个招呼</h1><p>今天只学 10 句最常用的问候语。慢慢听，慢慢说，每一句都会有提示。</p><button class="primary" id="start">开始学习第一句</button></div>
+        <div class="illustration" aria-label="两位朋友微笑问候">👋</div>
+      </section>
+      <main>
+        <div class="lesson-head"><h2>跟读练习</h2><div class="hint">先听示范，再按麦克风说一遍</div></div>
+        <section class="practice">
+          <aside class="steps"><div class="step active">1. 听一听</div><div class="step">2. 跟我读</div><div class="step">3. 看建议</div></aside>
+          <article class="card" aria-live="polite">
+            <div class="count" id="count">第 1 句，共 10 句</div>
+            <div class="word" id="word">Hello</div>
+            <div class="phonetic" id="phonetic">/həˈləʊ/</div>
+            <div class="meaning" id="meaning">你好 / 您好</div>
+            <div class="scene" id="scene">遇到朋友、邻居或新认识的人时，可以这样说。</div>
+            <div class="actions"><button class="secondary" id="listen">🔊 听慢速示范</button><button class="secondary" id="accent" aria-label="切换英式或美式发音">🇺🇸 美式发音</button><button class="primary" id="record">🎤 点击后跟读</button></div>
+            <div class="feedback" id="feedback"><strong id="feedbackTitle">很好，您已经开口了！</strong><span id="feedbackText">再听一次示范，试着把 “Hello” 连起来说。</span></div>
+            <div class="navrow"><button class="plain" id="previous">← 上一句</button><button class="secondary" id="next">下一句 →</button></div>
+          </article>
+        </section>
+        <section class="course-list"><h2>第一课会学到</h2><div class="items" id="items"></div></section>
+      </main>
+      <footer>内容根据《Greetings in English》第一课整理。请允许浏览器使用麦克风，才能进行跟读练习。</footer>
+    </div>
+    <script>
+      const lessons = [
+        ['Hello','/həˈləʊ/','你好 / 您好','遇到朋友、邻居或新认识的人时，可以这样说。','分成两拍：he-llow。前半轻轻说“哈”，后半“喽”稍微拉长。'],
+        ['Good morning','/ɡʊd ˈmɔːrnɪŋ/','早上好','上午见面时，用这句话问候对方。','重点在 morning 的 MOR。先说“古德”，再把“莫宁”的“莫”说得更重。'],
+        ['Good afternoon','/ɡʊd ˌæftərˈnuːn/','下午好','下午见面时，用这句话问候对方。','重点在最后的 noon。前面轻快说完，最后把“努恩”拉长一点。'],
+        ['Good evening','/ɡʊd ˈiːvnɪŋ/','晚上好','晚上见面时，用这句话问候对方。','evening 开头的 ee 要拉长，像“伊——”，不要急着把三个音节连成一团。'],
+        ['Nice to meet you','/naɪs tə miːt juː/','很高兴见到你','第一次认识对方时，可以这样说。','重点读 meet。嘴角微微向两边，拉长“米——”，最后的 you 轻一点。'],
+        ['What is your name?','/wʌt ɪz jʊr neɪm/','您叫什么名字？','想认识一位新朋友时，可以这样问。','把它分成三段：What is / your / name。最后的 name 声音稍微上扬，像在提问。'],
+        ['My name is...','/maɪ neɪm ɪz/','我的名字是……','回答姓名时，后面接上自己的名字。','先清楚地说 My name is，再停半拍，最后接上自己的英文名字。'],
+        ['How are you?','/haʊ ɑːr juː/','你好吗？','关心朋友近况时，可以这样问。','How 要张开嘴说“豪”。句尾的 you 声音稍稍上扬，听起来更亲切。'],
+        ['Long time no see','/lɔːŋ taɪm nəʊ siː/','好久不见','很久没见的朋友见面时，可以这样说。','把 long 的“哦”拉长。最后的 see 拉长成“西——”，表达见面时的热情。'],
+        ['See you tomorrow','/siː juː təˈmɔːrəʊ/','明天见','和对方约好明天再见时，可以这样告别。','See 和 you 都清楚分开。tomorrow 的重音在 MOR，像“特-莫-柔”。']
+      ];
+      let index = 0, recognition, accent = 'en-US', voices = [];
+      const $ = id => document.getElementById(id);
+      function loadVoices(){ voices = speechSynthesis.getVoices(); }
+      loadVoices();
+      speechSynthesis.onvoiceschanged = loadVoices;
+      function render(){ const x=lessons[index]; $('word').textContent=x[0]; $('phonetic').textContent=x[1]; $('meaning').textContent=x[2]; $('scene').textContent=x[3]; $('count').textContent=`第 ${index+1} 句，共 ${lessons.length} 句`; $('progress').textContent=`第一课 · ${index+1} / ${lessons.length}`; $('feedback').classList.remove('show'); document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===0)); }
+      function pickVoice(){
+        const preferred = accent === 'en-GB'
+          ? [/Google UK English Female/i,/Samantha/i,/Microsoft.*(Sonia|Libby|Hazel)/i,/en-GB/i]
+          : [/Google US English/i,/Samantha/i,/Microsoft.*(Jenny|Aria|Zira)/i,/en-US/i];
+        for (const test of preferred) { const match = voices.find(v => test.test(`${v.name} ${v.lang}`)); if (match) return match; }
+        return voices.find(v => v.lang.startsWith('en')) || null;
+      }
+      function speak(){
+        const u=new SpeechSynthesisUtterance(lessons[index][0]);
+        u.lang=accent; u.rate=.62; u.pitch=1;
+        const voice=pickVoice(); if(voice) u.voice=voice;
+        speechSynthesis.cancel(); speechSynthesis.speak(u);
+        document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===0));
+      }
+      function showFeedback(transcript){
+        const target=lessons[index][0].toLowerCase().replace(/[^a-z ]/g,'');
+        const spoken=transcript.toLowerCase().replace(/[^a-z ]/g,'');
+        const words=target.split(' '); const matched=words.filter(w=>spoken.includes(w)).length;
+        const tip=lessons[index][4];
+        $('feedbackTitle').textContent = matched >= Math.max(1, words.length-1) ? '读得不错！这里再练得更漂亮一点：' : transcript ? '我听到了，下一次请重点注意：' : '这次没有听清，不过您可以这样练：';
+        $('feedbackText').textContent = `${transcript ? `您刚才说的是“${transcript}”。` : ''}${tip}`;
+        $('feedback').classList.add('show');
+        document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===2));
+      }
+      async function record(){
+        const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+        if(!SR){ showFeedback(''); $('feedbackTitle').textContent='当前浏览器暂不支持语音识别'; $('feedbackText').textContent='您仍可以点击“听慢速示范”反复练习。建议使用最新版 Chrome 或 Edge 进行跟读识别。'; return; }
+        recognition=new SR(); recognition.lang='en-US'; recognition.interimResults=false; recognition.maxAlternatives=1;
+        $('record').classList.add('recording'); $('record').textContent='🔴 正在听，请说话';
+        document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===1));
+        recognition.start(); recognition.onresult=e=>showFeedback(e.results[0][0].transcript); recognition.onerror=()=>showFeedback('');
+        recognition.onend=()=>{ $('record').classList.remove('recording'); $('record').textContent='🎤 点击后跟读'; };
+      }
+      $('listen').onclick=speak;
+      $('accent').onclick=()=>{ accent = accent === 'en-US' ? 'en-GB' : 'en-US'; $('accent').textContent = accent === 'en-US' ? '🇺🇸 美式发音' : '🇬🇧 英式发音'; speak(); };
+      $('record').onclick=record; $('start').onclick=()=>{ document.querySelector('.practice').scrollIntoView({behavior:'smooth',block:'center'}); speak(); }; $('next').onclick=()=>{ index=(index+1)%lessons.length; render(); }; $('previous').onclick=()=>{ index=(index-1+lessons.length)%lessons.length; render(); };
+      $('items').innerHTML=lessons.map((x,i)=>`<div class="item"><span>第 ${i+1} 句</span><b>${x[0]}</b><span>${x[2]}</span></div>`).join(''); render();
+    </script>
+  </body>
+</html>
