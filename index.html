@@ -1,143 +1,321 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>慢慢学英语｜第一课：问候</title>
-    <style>
-      :root { --navy:#16324f; --blue:#216fb5; --sky:#eaf6ff; --yellow:#ffcb4f; --ink:#142435; --muted:#5d6d7d; --line:#cfdfeb; --success:#16866c; }
-      * { box-sizing:border-box; }
-      body { margin:0; color:var(--ink); background:linear-gradient(135deg,#edf8ff 0%,#fdfefe 52%,#fff8e7 100%); font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; font-size:19px; line-height:1.65; }
-      button { font:inherit; cursor:pointer; }
-      .shell { max-width:980px; margin:auto; padding:24px 28px 56px; }
-      header { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:10px 0 28px; }
-      .brand { font-weight:800; color:var(--navy); font-size:25px; letter-spacing:.02em; }
-      .progress { color:var(--navy); font-size:17px; font-weight:700; }
-      .hero { display:grid; grid-template-columns:1.15fr .85fr; align-items:center; gap:32px; background:white; border:1px solid var(--line); border-radius:28px; padding:42px; box-shadow:0 14px 35px rgba(36,87,125,.12); }
-      h1 { margin:0 0 14px; color:var(--navy); font-size:44px; line-height:1.24; }
-      .hero p { margin:0 0 24px; color:var(--muted); }
-      .illustration { min-height:230px; display:grid; place-items:center; position:relative; overflow:hidden; border-radius:22px; background:var(--sky); font-size:110px; }
-      .illustration::after { content:"你好！"; position:absolute; top:25px; right:24px; padding:5px 18px; border-radius:22px; background:white; color:var(--blue); font-size:24px; font-weight:800; box-shadow:0 5px 13px rgba(34,91,133,.12); }
-      .primary,.secondary { border-radius:14px; border:2px solid transparent; padding:14px 23px; font-weight:800; min-height:54px; }
-      .primary { color:#112c43; background:var(--yellow); box-shadow:0 3px 0 #dba524; }
-      .primary:hover { background:#ffd66e; transform:translateY(-1px); }
-      .secondary { background:white; color:var(--blue); border-color:#9fc8e9; }
-      main { margin-top:34px; }
-      .lesson-head { display:flex; align-items:end; justify-content:space-between; gap:20px; }
-      h2 { margin:0; color:var(--navy); font-size:30px; }
-      .hint { color:var(--muted); font-size:17px; }
-      .practice { margin-top:16px; display:grid; grid-template-columns:190px 1fr; gap:24px; align-items:stretch; }
-      .steps { display:grid; gap:10px; align-content:start; }
-      .step { padding:14px 16px; border-radius:14px; background:#fff; color:var(--muted); border:1px solid var(--line); font-size:17px; }
-      .step.active { border-color:var(--blue); background:#e7f4ff; color:var(--navy); font-weight:800; }
-      .card { background:white; border:1px solid var(--line); border-radius:24px; padding:38px; box-shadow:0 11px 25px rgba(36,87,125,.09); }
-      .count { color:var(--blue); font-weight:800; }
-      .word { margin:4px 0 0; color:var(--navy); font-family:Georgia,"Times New Roman",serif; font-size:58px; line-height:1.18; }
-      .phonetic { color:var(--blue); margin:2px 0 14px; font-size:23px; }
-      .meaning { font-weight:800; font-size:25px; }
-      .scene { margin:14px 0 25px; color:var(--muted); }
-      .actions { display:flex; flex-wrap:wrap; gap:12px; }
-      #listen { border-color:#a5c9e6; color:var(--blue); background:white; }
-      #record { background:var(--blue); color:white; padding-inline:28px; }
-      #record.recording { background:#c43d43; animation:pulse 1s infinite; }
-      @keyframes pulse { 50% { box-shadow:0 0 0 8px rgba(196,61,67,.16); } }
-      .feedback { display:none; margin-top:25px; padding:17px 20px; border-radius:15px; background:#eaf9f4; color:#155e4d; }
-      .feedback.show { display:block; }
-      .feedback strong { display:block; font-size:21px; }
-      .navrow { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:26px; }
-      .plain { border:0; background:transparent; color:var(--blue); font-weight:800; padding:10px; }
-      .course-list { margin-top:38px; padding-top:30px; border-top:1px solid var(--line); }
-      .course-list h2 { margin-bottom:16px; }
-      .items { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-      .item { background:rgba(255,255,255,.83); border:1px solid var(--line); border-radius:16px; padding:18px; }
-      .item b { color:var(--navy); display:block; font-family:Georgia,serif; font-size:25px; }
-      .item span { color:var(--muted); font-size:16px; }
-      footer { text-align:center; color:var(--muted); font-size:15px; margin-top:42px; }
-      @media (max-width:720px) { body{font-size:18px}.shell{padding:18px 16px 38px}.hero{grid-template-columns:1fr;padding:28px}.illustration{min-height:155px;font-size:82px}h1{font-size:35px}.practice{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}.step{font-size:14px;padding:10px}.card{padding:28px 22px}.word{font-size:47px}.items{grid-template-columns:1fr 1fr}.lesson-head{align-items:start;flex-direction:column;gap:2px} }
-    </style>
-  </head>
-  <body>
-    <div class="shell">
-      <header><div class="brand">慢慢学英语</div><div class="progress" id="progress">第一课 · 1 / 10</div></header>
-      <section class="hero">
-        <div><h1>用英语，开心地打个招呼</h1><p>今天只学 10 句最常用的问候语。慢慢听，慢慢说，每一句都会有提示。</p><button class="primary" id="start">开始学习第一句</button></div>
-        <div class="illustration" aria-label="两位朋友微笑问候">👋</div>
-      </section>
-      <main>
-        <div class="lesson-head"><h2>跟读练习</h2><div class="hint">先听示范，再按麦克风说一遍</div></div>
-        <section class="practice">
-          <aside class="steps"><div class="step active">1. 听一听</div><div class="step">2. 跟我读</div><div class="step">3. 看建议</div></aside>
-          <article class="card" aria-live="polite">
-            <div class="count" id="count">第 1 句，共 10 句</div>
-            <div class="word" id="word">Hello</div>
-            <div class="phonetic" id="phonetic">/həˈləʊ/</div>
-            <div class="meaning" id="meaning">你好 / 您好</div>
-            <div class="scene" id="scene">遇到朋友、邻居或新认识的人时，可以这样说。</div>
-            <div class="actions"><button class="secondary" id="listen">🔊 听慢速示范</button><button class="secondary" id="accent" aria-label="切换英式或美式发音">🇺🇸 美式发音</button><button class="primary" id="record">🎤 点击后跟读</button></div>
-            <div class="feedback" id="feedback"><strong id="feedbackTitle">很好，您已经开口了！</strong><span id="feedbackText">再听一次示范，试着把 “Hello” 连起来说。</span></div>
-            <div class="navrow"><button class="plain" id="previous">← 上一句</button><button class="secondary" id="next">下一句 →</button></div>
-          </article>
-        </section>
-        <section class="course-list"><h2>第一课会学到</h2><div class="items" id="items"></div></section>
-      </main>
-      <footer>内容根据《Greetings in English》第一课整理。请允许浏览器使用麦克风，才能进行跟读练习。</footer>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>银龄英语 · 开口说</title>
+  <meta name="description" content="专为零基础老年人设计的英语开口学习小站：大字、慢读、跟读、录音识别发音反馈。" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230f766e'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white'%3E%E2%9C%94%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- 顶部装饰云朵，让页面更亲切 -->
+  <div class="bg-decor" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <!-- ========== 首页 ========== -->
+  <section class="screen is-active" id="screen-home" aria-label="首页">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">🎓</span>
+        <div>
+          <h1 class="brand-name">银龄英语 · 开口说</h1>
+          <p class="brand-sub">零基础爷爷奶奶的英语开口课</p>
+        </div>
+      </div>
+      <button class="icon-btn" id="btn-open-settings" title="设置" aria-label="打开设置">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </header>
+
+    <div class="container">
+      <!-- 三步学习法 -->
+      <div class="steps" aria-label="三步学习法">
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <span class="step-icon">👂</span>
+          <p class="step-text"><strong>听一听</strong><br />先听老师怎么读</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <span class="step-icon">🗣️</span>
+          <p class="step-text"><strong>读一读</strong><br />跟着老师大声读</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <span class="step-icon">🎤</span>
+          <p class="step-text"><strong>录一录</strong><br />录下来听反馈</p>
+        </div>
+      </div>
+
+      <h2 class="section-title">今天想学点什么呢？</h2>
+      <p class="section-sub">挑一个喜欢的主题，点进去开始学 👇</p>
+
+      <div class="lesson-grid" id="lesson-grid"><!-- 由 JS 生成 --></div>
+
+      <div class="tip-banner">
+        <span class="tip-icon">💡</span>
+        <div>
+          <p class="tip-title">小提示</p>
+          <p class="tip-body">先用耳机或外放把音量调大，跟着老师大声读出来，进步最快！录音反馈需要网络和麦克风权限，请放心使用。</p>
+        </div>
+      </div>
     </div>
-    <script>
-      const lessons = [
-        ['Hello','/həˈləʊ/','你好 / 您好','遇到朋友、邻居或新认识的人时，可以这样说。','分成两拍：he-llow。前半轻轻说“哈”，后半“喽”稍微拉长。'],
-        ['Good morning','/ɡʊd ˈmɔːrnɪŋ/','早上好','上午见面时，用这句话问候对方。','重点在 morning 的 MOR。先说“古德”，再把“莫宁”的“莫”说得更重。'],
-        ['Good afternoon','/ɡʊd ˌæftərˈnuːn/','下午好','下午见面时，用这句话问候对方。','重点在最后的 noon。前面轻快说完，最后把“努恩”拉长一点。'],
-        ['Good evening','/ɡʊd ˈiːvnɪŋ/','晚上好','晚上见面时，用这句话问候对方。','evening 开头的 ee 要拉长，像“伊——”，不要急着把三个音节连成一团。'],
-        ['Nice to meet you','/naɪs tə miːt juː/','很高兴见到你','第一次认识对方时，可以这样说。','重点读 meet。嘴角微微向两边，拉长“米——”，最后的 you 轻一点。'],
-        ['What is your name?','/wʌt ɪz jʊr neɪm/','您叫什么名字？','想认识一位新朋友时，可以这样问。','把它分成三段：What is / your / name。最后的 name 声音稍微上扬，像在提问。'],
-        ['My name is...','/maɪ neɪm ɪz/','我的名字是……','回答姓名时，后面接上自己的名字。','先清楚地说 My name is，再停半拍，最后接上自己的英文名字。'],
-        ['How are you?','/haʊ ɑːr juː/','你好吗？','关心朋友近况时，可以这样问。','How 要张开嘴说“豪”。句尾的 you 声音稍稍上扬，听起来更亲切。'],
-        ['Long time no see','/lɔːŋ taɪm nəʊ siː/','好久不见','很久没见的朋友见面时，可以这样说。','把 long 的“哦”拉长。最后的 see 拉长成“西——”，表达见面时的热情。'],
-        ['See you tomorrow','/siː juː təˈmɔːrəʊ/','明天见','和对方约好明天再见时，可以这样告别。','See 和 you 都清楚分开。tomorrow 的重音在 MOR，像“特-莫-柔”。']
-      ];
-      let index = 0, recognition, accent = 'en-US', voices = [];
-      const $ = id => document.getElementById(id);
-      function loadVoices(){ voices = speechSynthesis.getVoices(); }
-      loadVoices();
-      speechSynthesis.onvoiceschanged = loadVoices;
-      function render(){ const x=lessons[index]; $('word').textContent=x[0]; $('phonetic').textContent=x[1]; $('meaning').textContent=x[2]; $('scene').textContent=x[3]; $('count').textContent=`第 ${index+1} 句，共 ${lessons.length} 句`; $('progress').textContent=`第一课 · ${index+1} / ${lessons.length}`; $('feedback').classList.remove('show'); document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===0)); }
-      function pickVoice(){
-        const preferred = accent === 'en-GB'
-          ? [/Google UK English Female/i,/Samantha/i,/Microsoft.*(Sonia|Libby|Hazel)/i,/en-GB/i]
-          : [/Google US English/i,/Samantha/i,/Microsoft.*(Jenny|Aria|Zira)/i,/en-US/i];
-        for (const test of preferred) { const match = voices.find(v => test.test(`${v.name} ${v.lang}`)); if (match) return match; }
-        return voices.find(v => v.lang.startsWith('en')) || null;
-      }
-      function speak(){
-        const u=new SpeechSynthesisUtterance(lessons[index][0]);
-        u.lang=accent; u.rate=.62; u.pitch=1;
-        const voice=pickVoice(); if(voice) u.voice=voice;
-        speechSynthesis.cancel(); speechSynthesis.speak(u);
-        document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===0));
-      }
-      function showFeedback(transcript){
-        const target=lessons[index][0].toLowerCase().replace(/[^a-z ]/g,'');
-        const spoken=transcript.toLowerCase().replace(/[^a-z ]/g,'');
-        const words=target.split(' '); const matched=words.filter(w=>spoken.includes(w)).length;
-        const tip=lessons[index][4];
-        $('feedbackTitle').textContent = matched >= Math.max(1, words.length-1) ? '读得不错！这里再练得更漂亮一点：' : transcript ? '我听到了，下一次请重点注意：' : '这次没有听清，不过您可以这样练：';
-        $('feedbackText').textContent = `${transcript ? `您刚才说的是“${transcript}”。` : ''}${tip}`;
-        $('feedback').classList.add('show');
-        document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===2));
-      }
-      async function record(){
-        const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-        if(!SR){ showFeedback(''); $('feedbackTitle').textContent='当前浏览器暂不支持语音识别'; $('feedbackText').textContent='您仍可以点击“听慢速示范”反复练习。建议使用最新版 Chrome 或 Edge 进行跟读识别。'; return; }
-        recognition=new SR(); recognition.lang='en-US'; recognition.interimResults=false; recognition.maxAlternatives=1;
-        $('record').classList.add('recording'); $('record').textContent='🔴 正在听，请说话';
-        document.querySelectorAll('.step').forEach((e,i)=>e.classList.toggle('active',i===1));
-        recognition.start(); recognition.onresult=e=>showFeedback(e.results[0][0].transcript); recognition.onerror=()=>showFeedback('');
-        recognition.onend=()=>{ $('record').classList.remove('recording'); $('record').textContent='🎤 点击后跟读'; };
-      }
-      $('listen').onclick=speak;
-      $('accent').onclick=()=>{ accent = accent === 'en-US' ? 'en-GB' : 'en-US'; $('accent').textContent = accent === 'en-US' ? '🇺🇸 美式发音' : '🇬🇧 英式发音'; speak(); };
-      $('record').onclick=record; $('start').onclick=()=>{ document.querySelector('.practice').scrollIntoView({behavior:'smooth',block:'center'}); speak(); }; $('next').onclick=()=>{ index=(index+1)%lessons.length; render(); }; $('previous').onclick=()=>{ index=(index-1+lessons.length)%lessons.length; render(); };
-      $('items').innerHTML=lessons.map((x,i)=>`<div class="item"><span>第 ${i+1} 句</span><b>${x[0]}</b><span>${x[2]}</span></div>`).join(''); render();
-    </script>
-  </body>
+  </section>
+
+  <!-- ========== 学习列表页 ========== -->
+  <section class="screen" id="screen-lesson" aria-label="课程单词列表" hidden>
+    <header class="topbar">
+      <button class="back-btn" id="btn-back-home" aria-label="返回首页">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="lesson-heading">
+        <span class="lesson-heading-icon" id="lesson-heading-icon"></span>
+        <h2 id="lesson-title"></h2>
+      </div>
+      <div class="topbar-spacer"></div>
+    </header>
+
+    <div class="container">
+      <p class="lesson-sub" id="lesson-sub"></p>
+
+      <div class="toolbar" role="group" aria-label="朗读工具">
+        <button class="btn btn-soft" id="btn-play-all">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          整课慢速朗读
+        </button>
+        <label class="switch-line" title="认识新单词时自动朗读">
+          <input type="checkbox" id="chk-auto-speak" />
+          <span class="switch"></span>
+          <span class="switch-label">自动朗读</span>
+        </label>
+      </div>
+
+      <ul class="word-list" id="word-list"><!-- 由 JS 生成 --></ul>
+
+      <div class="start-bar">
+        <button class="btn btn-primary btn-xl" id="btn-start-practice">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12 3a4 4 0 0 0-4 4v5a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4z"/><path d="M5 11a1 1 0 0 1 2 0 5 5 0 0 0 10 0 1 1 0 0 1 2 0 7 7 0 0 1-6 6.92V21h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-3.08A7 7 0 0 1 5 11z"/></svg>
+          开始跟读练习
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 跟读练习页 ========== -->
+  <section class="screen" id="screen-practice" aria-label="跟读练习" hidden>
+    <header class="topbar">
+      <button class="back-btn" id="btn-back-lesson" aria-label="返回单词列表">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="practice-progress" id="practice-progress" aria-live="polite"></div>
+      <button class="icon-btn icon-btn-sm" id="btn-help" title="帮助" aria-label="使用帮助">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a5 5 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </button>
+    </header>
+
+    <div class="container practice-container">
+      <!-- 卡片：今天的句子 -->
+      <article class="practice-card" aria-label="今天练习的内容">
+        <div class="listen-area">
+          <button class="big-sound-btn" id="btn-say-phrase" aria-label="朗读整句">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          </button>
+          <div class="phrase-box">
+            <p class="phrase-en" id="phrase-en"></p>
+            <p class="phrase-zh" id="phrase-zh"></p>
+            <p class="phrase-hint" id="phrase-hint" hidden></p>
+          </div>
+        </div>
+
+        <div class="word-chips" id="word-chips" role="group" aria-label="一个词一个词听"></div>
+
+        <div class="listen-buttons" role="group" aria-label="朗读按钮">
+          <button class="btn btn-soft" id="btn-say-slow">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            整句慢读
+          </button>
+          <button class="btn btn-soft" id="btn-say-words">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h6"/><path d="M2 12h6"/><path d="M2 18h6"/><path d="m16 7 5 5-5 5"/></svg>
+            一个词一个词读
+          </button>
+        </div>
+      </article>
+
+      <!-- 卡片：录音练习 -->
+      <article class="practice-card record-card" aria-label="录音练习">
+        <h3 class="record-title" id="record-title">轮到你了，大声读出来！</h3>
+
+        <!-- 录音前 -->
+        <div id="record-idle">
+          <p class="record-desc">点下面的麦克风，<strong>跟着老师把这句话读一遍</strong>。读完再点一次结束。</p>
+          <button class="mic-btn" id="btn-record" aria-label="开始录音">
+            <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+            <span class="mic-label">点击开始录音</span>
+          </button>
+        </div>
+
+        <!-- 录音中 -->
+        <div id="record-live" hidden>
+          <p class="record-desc">正在听你读… 请对着麦克风大声读，读完<strong>点一下红色按钮结束</strong>。</p>
+          <button class="mic-btn mic-btn-live" id="btn-stop" aria-label="结束录音">
+            <svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="3"/></svg>
+            <span class="mic-label">点我结束</span>
+          </button>
+          <p class="rec-timer" id="rec-timer" aria-live="polite"></p>
+        </div>
+
+        <!-- 识别中 -->
+        <div id="record-processing" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="record-desc">电脑正在认真听，<br />马上给你反馈…</p>
+        </div>
+
+        <!-- 反馈结果 -->
+        <div id="record-result" hidden>
+          <div class="score-row" id="score-row" aria-live="polite"></div>
+          <p class="recognized-label">电脑听到你读的是：</p>
+          <p class="recognized-text" id="recognized-text"></p>
+
+          <div class="feedback-words" id="feedback-words"></div>
+          <p class="feedback-msg" id="feedback-msg"></p>
+
+          <div class="result-actions" role="group" aria-label="结果操作">
+            <button class="btn btn-soft" id="btn-play-mine">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              听我读的
+            </button>
+            <button class="btn btn-soft" id="btn-retry">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              再练一次
+            </button>
+            <button class="btn btn-primary" id="btn-next">
+              下一句
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <p class="support-note" id="support-note"></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== 设置弹层 ========== -->
+  <div class="overlay" id="overlay-settings" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="设置">
+      <div class="sheet-head">
+        <h2>⚙️ 设置</h2>
+        <button class="icon-btn" id="btn-close-settings" aria-label="关闭设置">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-row" for="sel-voice">
+          <span class="setting-name">老师的声音<small>选择你听着最清楚的英语声音</small></span>
+          <select id="sel-voice" class="big-select"></select>
+        </label>
+        <label class="setting-row" for="sel-speed">
+          <span class="setting-name">朗读速度<small>慢速更适合跟读</small></span>
+          <select id="sel-speed" class="big-select">
+            <option value="0.65">🐢 很慢</option>
+            <option value="0.8" selected>😊 慢速（推荐）</option>
+            <option value="0.95">🚶 常速</option>
+          </select>
+        </label>
+        <label class="setting-row setting-switch" for="chk-hint">
+          <span class="setting-name">显示中文谐音<small>帮助记忆的小帮手</small></span>
+          <span class="switch-wrap">
+            <input type="checkbox" id="chk-hint" checked />
+            <span class="switch"></span>
+          </span>
+        </label>
+        <label class="setting-row setting-switch" for="chk-autospeak">
+          <span class="setting-name">翻页自动朗读<small>进入下一句时自动读一遍</small></span>
+          <span class="switch-wrap">
+            <input type="checkbox" id="chk-autospeak" checked />
+            <span class="switch"></span>
+          </span>
+        </label>
+        <label class="setting-row" for="sel-fontsize">
+          <span class="setting-name">文字大小<small>看着更清楚</small></span>
+          <select id="sel-fontsize" class="big-select">
+            <option value="1">标准</option>
+            <option value="1.14">更大</option>
+            <option value="1.28">特大</option>
+          </select>
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btn-test-voice">
+        🔊 试听老师的声音
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== 帮助弹层 ========== -->
+  <div class="overlay" id="overlay-help" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="使用帮助">
+      <div class="sheet-head">
+        <h2>❓ 怎么用</h2>
+        <button class="icon-btn" id="btn-close-help" aria-label="关闭帮助">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="help-body">
+        <p><b>① 先听。</b>点绿色小喇叭 🔊 或“整句慢读”，听老师怎么读。</p>
+        <p><b>② 一个词一个词听。</b>点“一个词一个词读”，每个词中间会停一下，方便你听清。</p>
+        <p><b>③ 跟着读。</b>点红色麦克风 🎤 开始录音，大声把句子读一遍，读完再点一次结束。</p>
+        <p><b>④ 看反馈。</b>电脑会告诉你哪些词读得好（绿色 ✓），哪些还要再练练（红色 ✗），点一下有颜色的词可以再听老师读。</p>
+        <p class="help-tip">小提醒：录音识别需要麦克风权限和网络，请用 <b>Chrome 或 Edge 浏览器</b>，效果最好。识别结果是电脑“听”到的参考，不是考试打分，读错也没关系，多练几次就会越来越准！</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 浏览器提示弹层 ========== -->
+  <div class="overlay" id="overlay-browser" hidden>
+    <div class="sheet sheet-small" role="alertdialog" aria-modal="true" aria-label="浏览器提示">
+      <div class="sheet-head"><h2>🌐 换个浏览器更好用</h2><button class="icon-btn" id="btn-close-browser" aria-label="关闭"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+      <div class="help-body">
+        <p id="browser-msg"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 学完一课弹层 ========== -->
+  <div class="overlay" id="overlay-done" hidden>
+    <div class="sheet sheet-small" role="dialog" aria-modal="true" aria-label="学习完成">
+      <div class="sheet-head">
+        <h2 id="done-heading">🎉 学完一课啦！</h2>
+        <button class="icon-btn" id="btn-close-done" aria-label="关闭并返回单词列表">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div id="done-body" style="text-align:center;">
+        <p class="done-title"></p>
+        <p class="done-stars"></p>
+        <p class="done-meta"></p>
+        <p class="done-note"></p>
+      </div>
+      <div class="done-actions">
+        <button class="btn btn-soft" id="btn-done-again">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          再学一遍
+        </button>
+        <button class="btn btn-primary" id="btn-done-list">返回单词列表</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
 </html>
