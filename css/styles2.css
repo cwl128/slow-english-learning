@@ -108,3 +108,9 @@
   .menu-main b { font-size: 1.25rem; }
   .menu-icon { width: 64px; height: 64px; font-size: 36px; }
 }
+
+/* 原版PPT下载卡 */
+a.menu-card { text-decoration: none; }
+.menu-card.menu-download { border-bottom-color: #7C3AED; }
+.menu-card.menu-download .menu-icon { background: #EDE3FE; }
+.menu-card.menu-download .menu-arrow { color: #7C3AED; }
