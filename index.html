@@ -7,6 +7,7 @@
   <meta name="description" content="专为零基础老年人设计的英语开口学习小站：大字、慢读、跟读、录音识别发音反馈。" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230f766e'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white'%3E%E2%9C%94%EF%B8%8F%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles2.css" />
 </head>
 <body>
   <!-- 顶部装饰云朵，让页面更亲切 -->
@@ -16,14 +17,46 @@
     <span class="blob blob-3"></span>
   </div>
 
-  <!-- ========== 首页 ========== -->
-  <section class="screen is-active" id="screen-home" aria-label="首页">
+  <!-- ========== 开始界面 ========== -->
+  <section class="screen is-active" id="screen-start" aria-label="欢迎与鸣谢">
+    <div class="container start-wrap">
+      <div class="start-brand">
+        <span class="brand-mark">🎓</span>
+        <div>
+          <p class="brand-name">银龄英语 · 开口说</p>
+          <p class="brand-sub">公益英语启蒙小课堂</p>
+        </div>
+      </div>
+
+      <p class="start-kicker">第一课 · Greetings in English</p>
+      <h1 class="start-title">用英语问候</h1>
+      <p class="start-title-en">Greetings in English</p>
+      <p class="start-sub">大字、慢读、跟着读、录下来——电脑帮你听发音</p>
+
+      <button class="btn btn-primary btn-xl start-enter" id="btn-start-enter">
+        开始学习
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+
+      <div class="support-box" role="note" aria-label="鸣谢协助机构">
+        <img class="support-logo" src="data:image/jpeg;base64,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" alt="米果教育 图标" />
+        <p class="support-text">本公益项目获得 <b>米果教育</b><br />和 <b>Heritage Bridges</b> 协助支持</p>
+        <img class="support-logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAlqADAAQAAAABAAAAlgAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAlgCWAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMAAgICAgICAwICAwQDAwMEBgQEBAQGBwYGBgYGBwkHBwcHBwcJCQkJCQkJCQoKCgoKCgwMDAwMDg4ODg4ODg4ODv/bAEMBAgICAwMDBgMDBg4KCAoODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODv/dAAQACv/aAAwDAQACEQMRAD8A/eSiiisz0AooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//0P3kooorM9AKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooD//2Q==" alt="Heritage Bridges 图标" />
+      </div>
+
+      <p class="start-note">建议用 Chrome / Edge 浏览器并戴上耳机 🎧<br />第一次点麦克风时请选择“允许”</p>
+    </div>
+  </section>
+
+  <!-- ========== 主菜单 ========== -->
+
+    <section class="screen" id="screen-home" aria-label="主菜单" hidden>
     <header class="topbar">
       <div class="brand">
         <span class="brand-mark">🎓</span>
         <div>
           <h1 class="brand-name">银龄英语 · 开口说</h1>
-          <p class="brand-sub">零基础爷爷奶奶的英语开口课</p>
+          <p class="brand-sub">第一课 · Greetings in English</p>
         </div>
       </div>
       <button class="icon-btn" id="btn-open-settings" title="设置" aria-label="打开设置">
@@ -32,39 +65,61 @@
     </header>
 
     <div class="container">
-      <!-- 三步学习法 -->
-      <div class="steps" aria-label="三步学习法">
-        <div class="step-card">
-          <span class="step-num">1</span>
-          <span class="step-icon">👂</span>
-          <p class="step-text"><strong>听一听</strong><br />先听老师怎么读</p>
-        </div>
-        <div class="step-arrow" aria-hidden="true">→</div>
-        <div class="step-card">
-          <span class="step-num">2</span>
-          <span class="step-icon">🗣️</span>
-          <p class="step-text"><strong>读一读</strong><br />跟着老师大声读</p>
-        </div>
-        <div class="step-arrow" aria-hidden="true">→</div>
-        <div class="step-card">
-          <span class="step-num">3</span>
-          <span class="step-icon">🎤</span>
-          <p class="step-text"><strong>录一录</strong><br />录下来听反馈</p>
-        </div>
+      <h2 class="section-title">第一课 · Greetings in English</h2>
+      <p class="section-sub">用英语问候——今天想做什么？</p>
+
+      <div class="menu-cards">
+        <button class="menu-card" id="btn-open-ppt">
+          <span class="menu-icon">📖</span>
+          <span class="menu-main"><b>查看课程 PPT</b><small>网页版课件 · 共 24 页 · 可整页朗读</small></span>
+          <span class="menu-arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="menu-card menu-accent" id="btn-open-practice">
+          <span class="menu-icon">🎤</span>
+          <span class="menu-main"><b>发音练习</b><small>跟着 PPT 一句一句读 · 录音 + 电脑反馈</small></span>
+          <span class="menu-arrow" aria-hidden="true">→</span>
+        </button>
       </div>
 
-      <h2 class="section-title">今天想学点什么呢？</h2>
-      <p class="section-sub">挑一个喜欢的主题，点进去开始学 👇</p>
-
-      <div class="lesson-grid" id="lesson-grid"><!-- 由 JS 生成 --></div>
-
-      <div class="tip-banner">
-        <span class="tip-icon">💡</span>
-        <div>
-          <p class="tip-title">小提示</p>
-          <p class="tip-body">先用耳机或外放把音量调大，跟着老师大声读出来，进步最快！录音反馈需要网络和麦克风权限，请放心使用。</p>
-        </div>
+      <div class="menu-how">
+        <p class="menu-how-title">怎么学？</p>
+        <p class="menu-how-body">① 先看课程 PPT 学句子　→　② 点“发音练习”，听一句读一句　→　③ 点红色麦克风跟读，电脑告诉你读得好不好。</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ========== 课程 PPT 页 ========== -->
+  <section class="screen" id="screen-ppt" aria-label="课程PPT" hidden>
+    <header class="topbar">
+      <button class="back-btn" id="btn-back-menu-ppt" aria-label="返回主菜单">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="lesson-heading">
+        <span class="lesson-heading-icon">📖</span>
+        <h2 id="ppt-title">第一课 · 课程PPT</h2>
+      </div>
+      <div class="topbar-spacer"></div>
+    </header>
+
+    <div class="container">
+      <p class="lesson-sub" id="ppt-sub">Greetings in English · 用英语问候（网页版课件）</p>
+
+      <div class="ppt-stage" id="ppt-stage" aria-live="polite"><!-- 由 JS 渲染 --></div>
+
+      <div class="ppt-controls">
+        <button class="btn btn-soft" id="ppt-prev">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          上一页
+        </button>
+        <span class="ppt-page" id="ppt-page"></span>
+        <button class="btn btn-soft" id="ppt-next">
+          下一页
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="ppt-dots" id="ppt-dots"></div>
+      <p class="ppt-note">💡 本页为原版 PPT 的网页版整理，方便电脑、平板复习；想更清楚时也可以把设备横过来看。</p>
     </div>
   </section>
 
@@ -317,5 +372,6 @@
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/course.js"></script>
 </body>
 </html>
