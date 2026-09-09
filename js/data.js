@@ -54,14 +54,14 @@ const PPT_SLIDES = [
   },
   {
     kind: "people",
-    head: { en: "我们的老师", zh: "来自 Heritage Bridges 的哥哥姐姐", py: "" },
+    head: { en: "Our teachers", zh: "来自 米果教育（Miguo Education）的老师", py: "" },
     lines: [
       { en: "Ronnie", zh: "10th · Tennis, piano", py: "" },
       { en: "Justin", zh: "10th · Viola, Badminton, Debate", py: "" },
       { en: "William", zh: "10th · Watching movies, science fiction", py: "" },
       { en: "Tendy", zh: "11th · guitar, singing, anime", py: "" }
     ],
-    note: ""
+    note: "教学团队由米果教育（Miguo Education）的老师和同学组成。"
   },
   {
     kind: "qa",
