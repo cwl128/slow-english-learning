@@ -339,7 +339,10 @@ function startListening() {
       for (let j = 0; j < count; j++) {
         const alt = res[j] || res;
         const t = String((alt && alt.transcript) || "").trim();
-        if (t) rec.alts.push(t);
+        if (t) {
+          rec.alts.push(t);
+          rec.candidates.push({ text: t, confidence: Number((alt && alt.confidence) || 0) });
+        }
       }
     }
     rec.processedFinals = i;
@@ -395,6 +398,7 @@ async function startRecording() {
   if (rec.active) return;
   resetResultState();
   rec.alts = [];
+  rec.candidates = [];
   rec.interim = "";
   rec.restartCount = 0;
   rec.micBlocked = false;
@@ -500,10 +504,24 @@ async function finishRecording() {
   const best = pickBestCandidate(target, candidates);
   if (!rec.srSupported || !best) {
     showNoRecognitionResult();
-  } else {
-    rec.transcript = best;
-    showFeedback(best);
+    return;
   }
+  rec.transcript = best;
+  // 用“首选词 + 置信度 + 易混音对”做智能判断
+  const top = (rec.candidates && rec.candidates.length) ? rec.candidates[0] : { text: best, confidence: 0 };
+  const confusion = detectVowelConfusion(target, top.text);
+  const topRes = evaluatePhrase(target, top.text);
+  const bestRes = evaluatePhrase(target, best);
+  ORIGINAL_SHOW_FEEDBACK(confusion ? (top.text || best) : best);
+  applySmartAssessment({
+    target: target,
+    topText: top.text,
+    topConf: top.confidence,
+    confusion: confusion,
+    topScore: topRes.score,
+    bestScore: bestRes.score,
+    bestText: best
+  });
 }
 
 function showNoRecognitionResult() {
@@ -548,3 +566,91 @@ function showNoRecognitionResult() {
   style.textContent = ".rec-live-text{margin-top:10px;font-size:1.15rem;font-weight:700;color:var(--brand-deep);min-height:1.4em}";
   document.head.appendChild(style);
 })();
+
+/* =========================================================
+   4. 元音混淆检测（A/E/I 等）
+   浏览器的识别只给文字结果，但会给出“首选词 + 置信度”。
+   我们用“首选词”和他实际听到的词来判断是否读成了易混音。
+   ========================================================= */
+const ORIGINAL_SHOW_FEEDBACK = showFeedback;
+
+/* 常见易混音对（针对本课词汇），pairs = 可能被听成的词 */
+const VOWEL_TIPS = {
+  "see":   { pairs: ["say", "saw", "sea"], tip: "see 读 /siː/，是嘴角拉开、拖长的“衣”；say 读 /seɪ/，结尾有个滑音“诶”。" },
+  "meet":  { pairs: ["met", "mitt", "mat"], tip: "meet 读 /miːt/，长音“衣”；met 读 /met/，是短促的“哎”。" },
+  "fine":  { pairs: ["fan", "fun", "fen", "fin"], tip: "fine 读 /faɪn/，从“啊”滑到“衣”；fan/fen 是短促的“哎”。" },
+  "name":  { pairs: ["nem", "nam", "neem"], tip: "name 读 /neɪm/，中间有“诶”的滑音，最后要闭上嘴唇发 m。" },
+  "night": { pairs: ["net", "nut", "not", "neat"], tip: "night 读 /naɪt/，是“啊→衣”的滑音；net 是短促的“哎”。" },
+  "nice":  { pairs: ["ness", "nace", "nets"], tip: "nice 读 /naɪs/，是“啊→衣”的滑音。" },
+  "bye":   { pairs: ["bay", "boy", "bee"], tip: "bye 读 /baɪ/，“啊→衣”的滑音；bee 是长音“衣”。" },
+  "thank": { pairs: ["think", "tank", "thick"], tip: "thank 读 /θæŋk/，嘴张大（“啊”和“哎”之间）；think 读 /θɪŋk/，嘴放松、短促。" },
+  "good":  { pairs: ["god", "gut"], tip: "good 读 /ɡʊd/，短音“乌”，嘴唇微圆；god 是张大嘴的“啊”。" },
+  "morning": { pairs: ["moaning"], tip: "morning 的 or 读 /ɔː/，嘴唇要圆起来（像“哦”拖长）。" },
+  "evening": { pairs: ["even"], tip: "evening 开头是长音 /iː/（“衣”拖长），eve 和 eve-ning 要连起来。" },
+  "afternoon": { pairs: ["after", "afternoon"], tip: "afternoon 重音在后面的 noon，oo 是长音 /uː/（“乌”拖长）。" },
+  "hello": { pairs: ["hollow", "halo", "yellow"], tip: "hello 的 e 读 /e/，是短促的“哎”，不是“哈”也不是“衣”。" },
+  "how":   { pairs: ["who"], tip: "how 读 /haʊ/，从“啊”滑到“乌”；who 读 /huː/ 是长音“乌”。" },
+  "you":   { pairs: ["your", "yo"], tip: "you 读 /juː/，长音“乌”拖长；your 末尾有 r 的卷舌。" },
+  "what":  { pairs: ["wet", "wit", "white"], tip: "what 读 /wɒt/，嘴张大（像“啊”偏圆）；wet 是短促“哎”。" },
+  "fine,": { pairs: [], tip: "" }
+};
+
+function detectVowelConfusion(targetPhrase, heardText) {
+  const tw = tokenize(targetPhrase).plain;
+  const hw = tokenize(heardText || "").plain;
+  if (!hw.length) return null;
+  for (const w of tw) {
+    const entry = VOWEL_TIPS[w];
+    if (!entry) continue;
+    for (const p of entry.pairs) {
+      if (hw.indexOf(p) >= 0 && hw.indexOf(w) < 0) {
+        return { target: w, heard: p, tip: entry.tip };
+      }
+    }
+  }
+  return null;
+}
+
+function applySmartAssessment(info) {
+  const { target, topText, topConf, confusion, topScore, bestScore, bestText } = info;
+  const row = $("#score-row");
+  const msg = $("#feedback-msg");
+  const title = $("#record-title");
+
+  // ① 读到别的词（典型 A/E/I 混淆）→ 明确指出，不给“读对了”
+  if (confusion) {
+    const rt = $("#recognized-text");
+    if (rt) rt.textContent = topText || confusion.heard;
+    if (row) row.innerHTML = '<span class="score-stars" aria-hidden="true">★☆☆</span><span class="score-text">注意元音</span><span class="score-percent">再练练</span>';
+    const targetWords = tokenize(info.target || "").plain;
+    $$("#feedback-words .fb-word").forEach((chip, idx) => {
+      const hit = (targetWords[idx] === confusion.target) ||
+                  (chip.textContent.toLowerCase().indexOf(confusion.target.toLowerCase()) >= 0);
+      if (hit) {
+        chip.className = "fb-word is-miss";
+        chip.innerHTML = '<span class="fb-mark">✗ 再练练</span>' + escapeHtml(confusion.target);
+      }
+    });
+    if (msg) msg.innerHTML =
+      "🎯 电脑听到的更像 “<b>" + escapeHtml(confusion.heard) + "</b>”，不是 “<b>" + escapeHtml(confusion.target) + "</b>”。<br>" +
+      escapeHtml(confusion.tip) +
+      "<br>先点上面的词听老师读一遍，再慢慢读一次。";
+    if (title) { title.textContent = "注意这个音！"; title.style.color = "var(--accent)"; }
+    return;
+  }
+
+  // ② 读对了但识别置信度低 → 提醒读清楚一点，不给三个星
+  if (topScore >= 70 && topConf > 0 && topConf < 0.72) {
+    if (row) row.innerHTML = '<span class="score-stars" aria-hidden="true">★★☆</span><span class="score-text">读对了</span><span class="score-percent">再清楚一点</span>';
+    if (msg) msg.innerHTML = "✅ 读对了！不过电脑听得不太确定（可能是声音小、离麦克风远或读得快）。<br>再大声、清楚一点读一遍，就容易拿到三个星。";
+    return;
+  }
+
+  // ③ 首选词和整句差得远，但某个候选很接近 → 可能是麦克风/语速问题
+  if (topScore + 20 <= bestScore && topScore < 60) {
+    if (msg) msg.innerHTML =
+      "🤔 电脑第一次听到的是 “<b>" + escapeHtml(topText || "") + "</b>”，和这句话不太一样。<br>" +
+      "可能是距离、音量或语速的问题：靠近麦克风、慢一点再读一次试试。";
+    if (title) { title.textContent = "再读清楚一点"; title.style.color = "var(--accent)"; }
+  }
+}
